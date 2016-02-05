@@ -7,6 +7,30 @@ This kit includes an app server, a GraphQL server, and a transpiler that you can
 `/` - the webapp is served from the root
 `/graphql` - graphql queries are processed on a special endpoint
 
+## Example graphQL queries
+
+Get all posts:
+```
+query {
+  posts {
+    id
+    content
+  }
+}
+```
+
+Get a specific post:
+```
+query {
+  node(id:"UG9zdDox") {
+    id
+    ...on Post {
+        content
+    }
+  }
+}
+```
+
 ## Installation
 
 ```
@@ -39,6 +63,10 @@ npm start
 ```
 git push heroku master
 ```
+
+## Hacky dev things:
+
+* No build process. `babel-node` is used to run, and the app is served from a webpack development server.
 
 ## License
 
