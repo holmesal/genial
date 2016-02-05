@@ -5,7 +5,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Widget list</h1>
+        <h1>Post list</h1>
         <ul>
           {this.props.viewer.widgets.edges.map(edge =>
             <li key={edge.node.id}>{edge.node.name} (ID: {edge.node.id})</li>
@@ -18,17 +18,17 @@ class App extends React.Component {
 
 export default Relay.createContainer(App, {
   fragments: {
-    viewer: () => Relay.QL`
-      fragment on User {
-        widgets(first: 10) {
-          edges {
-            node {
-              id,
-              name,
-            },
-          },
-        },
-      }
-    `,
+    //viewer: () => Relay.QL`
+    //  fragment on User {
+    //    widgets(first: 10) {
+    //      edges {
+    //        node {
+    //          id,
+    //          name,
+    //        },
+    //      },
+    //    },
+    //  }
+    //`,
   },
 });
