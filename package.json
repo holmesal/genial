@@ -9,6 +9,7 @@
     "update-schema": "babel-node ./scripts/updateSchema.js"
   },
   "dependencies": {
+    "babel-cli": "^6.3.17",
     "babel-core": "6.3.21",
     "babel-loader": "6.2.0",
     "babel-polyfill": "6.3.14",
@@ -33,6 +34,5 @@
     "webpack-dev-server": "1.14.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.3.17"
   }
 }

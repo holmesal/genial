@@ -1,6 +1,11 @@
-# Relay Starter Kit
+# GraphQL starter
 
 This kit includes an app server, a GraphQL server, and a transpiler that you can use to get started building an app with Relay. For a walkthrough, see the [Relay tutorial](https://facebook.github.io/relay/docs/tutorial.html).
+
+## Endpoints
+
+`/` - the webapp is served from the root
+`/graphql` - graphql queries are processed on a special endpoint
 
 ## Installation
 
@@ -13,7 +18,7 @@ npm install
 Start a local server:
 
 ```
-npm start
+heroku local
 ```
 
 ## Developing
@@ -27,6 +32,12 @@ regenerate `data/schema.json`, and restart the server:
 ```
 npm run update-schema
 npm start
+```
+
+## Deploying
+
+```
+git push heroku master
 ```
 
 ## License
