@@ -7,7 +7,7 @@ var sequelize = new Sequelize(dbUrl);
 
 // Model types
 var Post = sequelize.define('post', {
-  content: Sequelize.STRING
+  content: Sequelize.TEXT
 });
 
 sequelize.sync({force: true}).then(() => {

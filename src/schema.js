@@ -93,6 +93,30 @@ var queryType = new GraphQLObjectType({
   }),
 });
 
+var newPostMutation = mutationWithClientMutationId({
+  name: 'NewPost',
+  description: 'Creates a new post',
+  inputFields: {
+    content: {
+      type: new GraphQLNonNull(GraphQLString)
+    }
+  },
+  outputFields: {
+    post: {
+      type: postType,
+      resolve: (payload) => payload.post
+    }
+  },
+  mutateAndGetPayload: ({content}) => {
+    return Post.create({content}).then(post => {
+      console.info('created!', post);
+      return {
+        post: post.get()
+      };
+    });
+  }
+});
+
 /**
  * This is the type that will be the root of our mutations,
  * and the entry point into performing writes in our schema.
@@ -100,7 +124,7 @@ var queryType = new GraphQLObjectType({
 var mutationType = new GraphQLObjectType({
   name: 'Mutation',
   fields: () => ({
-    // Add your own mutations here
+    newPost: newPostMutation
   })
 });
 
@@ -110,6 +134,5 @@ var mutationType = new GraphQLObjectType({
  */
 export var Schema = new GraphQLSchema({
   query: queryType,
-  // Uncomment the following after adding some mutation fields:
-  // mutation: mutationType
+  mutation: mutationType
 });
