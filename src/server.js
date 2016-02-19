@@ -8,30 +8,6 @@ import webpackConfig from './../webpack.config.js';
 
 const APP_PORT = process.env.PORT || 8080;
 
-// Serve the Relay app
-//var compiler = webpack({
-//  entry: path.resolve(__dirname, 'js', 'app.js'),
-//  module: {
-//    loaders: [
-//      {
-//        exclude: /node_modules/,
-//        loader: 'babel',
-//        query: {
-//          plugins: ['./build/babelRelayPlugin'],
-//        },
-//        test: /\.js$/,
-//      }
-//    ]
-//  },
-//  output: {filename: 'app.js', path: '/'}
-//});
-//var app = new WebpackDevServer(compiler, {
-//  contentBase: '/public/',
-//  //proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
-//  publicPath: '/js/',
-//  hot: true,
-//  stats: 'errors-only'
-//});
 var app = new WebpackDevServer(webpack(webpackConfig), {
   contentBase: '../public/',
   //proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
