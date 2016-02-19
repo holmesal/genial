@@ -19,12 +19,23 @@ var _lodash2 = _interopRequireDefault(_lodash);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var dbUrl = process.env.NODE_ENV === 'production' ? 'postgres://btyuwemjytpdjx:SnG3_aA7tmQkplL9LFygAdAQcL@ec2-54-225-199-245.compute-1.amazonaws.com:5432/d3ssevji1t6kb3' : 'postgres://postgres:postgres@localhost:5432/genial';
-var sequelize = new _sequelize2.default(dbUrl, {
-  dialect: 'postgres',
-  dialectOptions: {
-    ssl: true
-  }
+if (process.env.NODE_ENV === 'production') {
+  var dbUrl = 'postgres://btyuwemjytpdjx:SnG3_aA7tmQkplL9LFygAdAQcL@ec2-54-225-199-245.compute-1.amazonaws.com:5432/d3ssevji1t6kb3';
+  var dbOptions = {
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: true
+    }
+  };
+  var env = 'PROD';
+} else {
+  var dbUrl = 'postgres://postgres:postgres@localhost:5432/genial';
+  var dbOptions = {};
+  var env = 'DEV';
+}
+var sequelize = new _sequelize2.default(dbUrl, dbOptions);
+sequelize.sync().then(function () {
+  return console.info('[' + env + ' DB] connected and synced!');
 });
 
 // Model types
@@ -38,17 +49,3 @@ var getPost = exports.getPost = function getPost(id) {
 var getPosts = exports.getPosts = function getPosts() {
   return Post.findAll();
 };
-
-// Sync
-if (process.env.NODE_ENV === 'production' || true) {
-  sequelize.sync().then(function () {
-    return console.info('connected and synced!');
-  });
-} else {
-  sequelize.sync().then(function () {
-    return console.info('[DEV DB] connected and synced!');
-  });
-  //sequelize.sync({force: true}).then(() => {
-  //  //bootstrap(User, Podcast)
-  //});
-}

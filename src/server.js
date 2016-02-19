@@ -8,14 +8,22 @@ import webpackConfig from './../webpack.config.js';
 
 const APP_PORT = process.env.PORT || 8080;
 
-var app = new WebpackDevServer(webpack(webpackConfig), {
-  contentBase: '../public/',
-  //proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
-  publicPath: webpackConfig.output.publicPath,
-  hot: true,
-  historyApiFallback: true,
-  stats: 'errors-only'
-});
+// Hacky - should separate webpac config into dev and production
+if (true || process.env.NODE_ENV === 'production') {
+  console.info('serving with static app');
+  var app = express();
+  app.use('/public', express.static(path.resolve(__dirname, '../public')));
+} else {
+  console.info('serving with webpack dev server');
+  var app = new WebpackDevServer(webpack(webpackConfig), {
+    contentBase: '../public/',
+    //proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
+    publicPath: webpackConfig.output.publicPath,
+    hot: true,
+    historyApiFallback: true,
+    stats: 'errors-only'
+  });
+}
 // Serve static resources
 app.use('/', express.static(path.resolve(__dirname, '../public')));
 // GraphQL endpoint

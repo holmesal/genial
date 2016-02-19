@@ -30,38 +30,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var APP_PORT = process.env.PORT || 8080;
 
-// Serve the Relay app
-//var compiler = webpack({
-//  entry: path.resolve(__dirname, 'js', 'app.js'),
-//  module: {
-//    loaders: [
-//      {
-//        exclude: /node_modules/,
-//        loader: 'babel',
-//        query: {
-//          plugins: ['./build/babelRelayPlugin'],
-//        },
-//        test: /\.js$/,
-//      }
-//    ]
-//  },
-//  output: {filename: 'app.js', path: '/'}
-//});
-//var app = new WebpackDevServer(compiler, {
-//  contentBase: '/public/',
-//  //proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
-//  publicPath: '/js/',
-//  hot: true,
-//  stats: 'errors-only'
-//});
-var app = new _webpackDevServer2.default((0, _webpack2.default)(_webpackConfig2.default), {
-  contentBase: '../public/',
-  //proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
-  publicPath: _webpackConfig2.default.output.publicPath,
-  hot: true,
-  historyApiFallback: true,
-  stats: 'errors-only'
-});
+// Hacky - should separate webpac config into dev and production
+if (true || process.env.NODE_ENV === 'production') {
+  console.info('serving with static app');
+  var app = (0, _express2.default)();
+  app.use('/public', _express2.default.static(_path2.default.resolve(__dirname, '../public')));
+} else {
+  console.info('serving with webpack dev server');
+  var app = new _webpackDevServer2.default((0, _webpack2.default)(_webpackConfig2.default), {
+    contentBase: '../public/',
+    //proxy: {'/graphql': `http://localhost:${GRAPHQL_PORT}`},
+    publicPath: _webpackConfig2.default.output.publicPath,
+    hot: true,
+    historyApiFallback: true,
+    stats: 'errors-only'
+  });
+}
 // Serve static resources
 app.use('/', _express2.default.static(_path2.default.resolve(__dirname, '../public')));
 // GraphQL endpoint

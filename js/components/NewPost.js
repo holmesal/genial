@@ -7,10 +7,12 @@ import { browserHistory } from 'react-router';
 export default class NewPost extends React.Component {
 
     state = {
-        content: ''
+        content: '',
+        saving: false
     };
 
     createNewPost() {
+        // Send the mutation
         Relay.Store.commitUpdate(new NewPostMutation({content: this.state.content}), {
             onFailure: (transaction) => {
                 let error = transaction.getError() || new Error('NewPost mutation failed :-(');
@@ -22,7 +24,9 @@ export default class NewPost extends React.Component {
                 // Navigate to this post
                 browserHistory.push(`/${id}`);
             }
-        })
+        });
+        // Disable the save button
+        this.setState({saving: true});
     }
 
     render() {
@@ -36,9 +40,9 @@ export default class NewPost extends React.Component {
                     onEnterKeyDown={this.createNewPost.bind(this)}
                 />
                 <RaisedButton
-                    label="Save"
+                    label={this.state.saving ? 'Saving...' : 'Save'}
                     primary
-                    disabled={this.state.content.length < 1}
+                    disabled={this.state.saving || this.state.content.length < 1}
                     onClick={this.createNewPost.bind(this)}
                 />
             </div>
