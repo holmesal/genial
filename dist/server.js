@@ -26,6 +26,10 @@ var _webpackConfig = require('./../webpack.config.js');
 
 var _webpackConfig2 = _interopRequireDefault(_webpackConfig);
 
+var _connectHistoryApiFallback = require('connect-history-api-fallback');
+
+var _connectHistoryApiFallback2 = _interopRequireDefault(_connectHistoryApiFallback);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var APP_PORT = process.env.PORT || 8080;
@@ -35,6 +39,7 @@ if (true || process.env.NODE_ENV === 'production') {
   console.info('serving with static app');
   var app = (0, _express2.default)();
   app.use('/public', _express2.default.static(_path2.default.resolve(__dirname, '../public')));
+  app.use((0, _connectHistoryApiFallback2.default)());
 } else {
   console.info('serving with webpack dev server');
   var app = new _webpackDevServer2.default((0, _webpack2.default)(_webpackConfig2.default), {

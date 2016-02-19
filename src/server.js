@@ -5,6 +5,7 @@ import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import {Schema} from './schema';
 import webpackConfig from './../webpack.config.js';
+import history from'connect-history-api-fallback';
 
 const APP_PORT = process.env.PORT || 8080;
 
@@ -13,6 +14,7 @@ if (true || process.env.NODE_ENV === 'production') {
   console.info('serving with static app');
   var app = express();
   app.use('/public', express.static(path.resolve(__dirname, '../public')));
+  app.use(history());
 } else {
   console.info('serving with webpack dev server');
   var app = new WebpackDevServer(webpack(webpackConfig), {
