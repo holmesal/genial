@@ -1,5 +1,7 @@
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -27,12 +29,15 @@ var _nodeDefinitions = (0, _graphqlRelay.nodeDefinitions)(function (globalId) {
   if (type === 'Post') {
     return (0, _database.getPost)(id);
   } else {
+    throw new Error('Could not resolve type for id ' + globalId + ' - are you sure this is a global id?');
     return null;
   }
 }, function (obj) {
   if (obj.Model === _database.Post) {
     return postType;
   } else {
+    console.info(obj, typeof obj === 'undefined' ? 'undefined' : _typeof(obj), obj.Model);
+    throw new Error('Internal error - could not map postgres type to graphQL schema');
     return null;
   }
 });

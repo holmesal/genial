@@ -38,6 +38,7 @@ var {nodeInterface, nodeField} = nodeDefinitions(
     if (type === 'Post') {
       return getPost(id);
     } else {
+      throw new Error(`Could not resolve type for id ${globalId} - are you sure this is a global id?`);
       return null;
     }
   },
@@ -45,6 +46,8 @@ var {nodeInterface, nodeField} = nodeDefinitions(
     if (obj.Model === Post) {
       return postType;
     } else {
+      console.info(obj, typeof obj, obj.Model);
+      throw new Error(`Internal error - could not map postgres type to graphQL schema`);
       return null;
     }
   }

@@ -10,7 +10,7 @@ import history from'connect-history-api-fallback';
 const APP_PORT = process.env.PORT || 8080;
 
 // Hacky - should separate webpac config into dev and production
-if (true || process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   console.info('serving with static app');
   var app = express();
   app.use('/public', express.static(path.resolve(__dirname, '../public')));

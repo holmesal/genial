@@ -35,7 +35,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var APP_PORT = process.env.PORT || 8080;
 
 // Hacky - should separate webpac config into dev and production
-if (true || process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   console.info('serving with static app');
   var app = (0, _express2.default)();
   app.use('/public', _express2.default.static(_path2.default.resolve(__dirname, '../public')));

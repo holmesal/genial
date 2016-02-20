@@ -1,4 +1,13 @@
 
+# 2.19.2016
+
+* Added post composition route /new
+* Added post view route /{post-id}
+* Added post creation mutation
+* Improved handling of dev/production db (prod needs ssl, for example)
+* Split webpack build config into dev/prod
+* The backend now serves compressed static js, not webpack-dev-server
+
 
 # 2.5.2016
 
